@@ -1,7 +1,7 @@
 # cpp-seed
 This will be a starting point for c++ projects which will auto include gtest and boost libs
 
-## Debian Buster (OS)_
+## Debian Buster (OS)
 The requirements are:
 
 * CMake 3.11 or better;
