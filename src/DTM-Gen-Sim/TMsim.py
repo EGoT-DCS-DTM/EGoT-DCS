@@ -67,7 +67,8 @@ param = {"trust score" : 0,
 "timeout count" : 0,
 "alert count" : 0,
 "other action count" : 0,
-"SD transit time" : 0
+"SD transit time" : 0,
+"DTM response:" : 0
 }
 
 TIME = time.time()
@@ -149,27 +150,42 @@ def timeKeeping(current_row):
 
 def response(current_row):
     actor = current_row[0]
+    response_flag = 0
     print("----RESPONSE SECTION----")
     #to see where we are 
     print(currentTrustVector[actor]["total message count"])
 
     #check for Excessive TSLC 
     if currentTrustVector[actor]["total message count"] > R_THRESH_TSLC:
-        print("Excessive time since last communication from", actor)
+        DTM_response = "Excessive time since last communication from" + actor
+        currentTrustVector[actor]["DTM response"] = DTM_response
+        response_flag = 1
+        print(DTM_response)
 
     #check for low trust score 
     if (currentTrustVector[actor]["trust score"] < R_THRESH_TS and currentTrustVector[actor]["certainty"] > R_THRESH_C and
         currentTrustVector[actor]["relative factor of certainty"] > R_THRESH_RFC and currentTrustVector[actor]["distrust score"] > R_THRESH_DS):
-        print("Trust is low for", actor)
+        DTM_response = "Trust is low for" + actor
+        currentTrustVector[actor]["DTM response"] = DTM_response
+        response_flag = 1
+        print(DTM_response)
     
     #check for low communication rate
     if ((currentTrustVector[actor]["communication frequency"] < R_THRESH_CommFrq) and (currentTrustVector[actor]["total message count"] > R_THRESH_TotMsg)):
-        print("Communication rate is low from", actor)
+        DTM_response = "Communication rate is low from" + actor
+        currentTrustVector[actor]["DTM response"] = DTM_response
+        response_flag = 1
+        print(DTM_response)
     
     #check for excessive communication rate 
     if ((currentTrustVector[actor]["communication frequency"] > R_THRESH_CommFrq) and (currentTrustVector[actor]["total message count"] > R_THRESH_TotMsg)):
-        print("Communication rate is ecessive from", actor)
+        DTM_response = "Communication rate is ecessive from" + actor
+        currentTrustVector[actor]["DTM response"] = DTM_response
+        response_flag = 1
+        print(DTM_response)
 
+    if (not response_flag):
+        currentTrustVector[actor]["DTM response"] = "Do nothing"
 
 
 #pass in the whole row
@@ -353,13 +369,19 @@ if (pathlib.Path(args.file).exists() == True):
         x = 0
         for row in fileReader:
             if (count > 0):
+                #update message counters
                 messageCount(row)
+                #timekeeping new message
                 timeKeeping(row)
                 if (args.equation == "v1"):
+                    #calculate MVoT
                     calculation(row)
+                    #generate response
+                    response(row)
+                    #write to output csv file
                     printToCSV(row,x)
                     x += 1
-                response(row)
+                #response(row)
             if (args.debug == 'y'):
                 input("Press Enter to continue...")
             count += 1
