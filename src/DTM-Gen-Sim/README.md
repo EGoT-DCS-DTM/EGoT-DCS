@@ -34,7 +34,9 @@ PROFILE - The profile you want the generated data to be. Pick one of the profile
     almost_bad - This profile generates Ux, Ind, Dis, N messages until the last set<br />
 
 N DATA POINTS - The number of messages to be generated per actor <br />
+
 TIMESTEP - The increment between each message <br /> 
+
 PROFILE ADDONS - Allows for special funcitonality in some profiles <br />
     Random profile - if PROFILE ADDONS is 1, each data point will have a random timestamp <br />
     almost_good - if PROFILE ADDONS is not zero, PROFILE ADDONS value will be where a UX message is added <br />
