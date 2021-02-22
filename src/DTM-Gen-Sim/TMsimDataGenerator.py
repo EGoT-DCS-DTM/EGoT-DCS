@@ -11,6 +11,7 @@ ap.add_argument('-f', '--file', required=True, metavar='', help = 'name of the f
 ap.add_argument('-p', '--profile', required=True, metavar='', help = 'the profile deciding the type data is generated')
 ap.add_argument('-n', '--number', required=True, metavar='', type=int, help = 'the number of data sets generated')
 ap.add_argument('-i', '--increment', required=True, metavar='', type =float, help = 'time increment')
+ap.add_argument('-pa', '--profile_addon', required=False, metavar='', type=int, help = 'allows for random time steps for each data point')
 args = ap.parse_args()
 
 profiles = ['ideal', 'random', 'flawed', 'almost_good', 'almost_bad']
@@ -35,14 +36,21 @@ def random_profile():
     messageList = ['Ex','Ux','Ind','N', 'Dis']
     actorList = ['DER','DCM','DERAS','DTM']
     fileWriter = csv.writer(csvFile)
-    for x in range(args.number):
+    num_datapoints = int(args.number) * 4
+    rand_timestep = random.sample(range(1, 86400), num_datapoints)
+    rand_timestep.sort()
+    
+    for x in (range(num_datapoints)):
+
         randomIndexM = randrange(len(messageList))
         message = messageList[randomIndexM]
 
         randomIndexA = randrange(len(actorList))
         actor = actorList[randomIndexA]
-        
-        fileWriter.writerow([actor, '%s' % message, '%f' % (time.time() + args.increment * x) , random.randint(15, 45)/100, 'No Attack'])
+        if(args.profile_addon == 1):
+            fileWriter.writerow([actor, '%s' % message, '%f' % (time.time() + rand_timestep[x]) , random.randint(15, 45)/100, 'No Attack'])  
+        else:
+            fileWriter.writerow([actor, '%s' % message, '%f' % (time.time() + args.increment * x) , random.randint(15, 45)/100, 'No Attack'])
     return 
 
 #this flawed profile  
@@ -62,38 +70,38 @@ def flawed_profile():
 def almost_ideal():
     fileWriter = csv.writer(csvFile)
     numrange = args.number 
-    for x in range(numrange - 1):
-        fileWriter.writerow(['DER' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
-        fileWriter.writerow(['DCM' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
-        fileWriter.writerow(['DERAS' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
-        fileWriter.writerow(['DTM' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
-    
-    for x in range(1):
-        fileWriter.writerow(['DER' , 'Ux', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
-        fileWriter.writerow(['DCM' , 'Ux', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
-        fileWriter.writerow(['DERAS' , 'Ux', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
-        fileWriter.writerow(['DTM' , 'Ux', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+    for x in range(numrange):
+        if (args.profile_addon is not None) and (x == args.profile_addon):
+            fileWriter.writerow(['DER' , 'Ux', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+            fileWriter.writerow(['DCM' , 'Ux', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+            fileWriter.writerow(['DERAS' , 'Ux', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+            fileWriter.writerow(['DTM' , 'Ux', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+        
+        else:
+            fileWriter.writerow(['DER' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+            fileWriter.writerow(['DCM' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+            fileWriter.writerow(['DERAS' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+            fileWriter.writerow(['DTM' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
     return
 
 def almost_flawed():
     messageList = ['Ux','Ind','N', 'Dis']
-    actorList = ['DER','DCM','DERAS','DTM']
     fileWriter = csv.writer(csvFile)
     numrange = args.number
-    for x in range(numrange - 1):
+    for x in range(numrange):
         randomIndex = randrange(len(messageList))
         message = messageList[randomIndex]
-
-        randomIndexA = randrange(len(actorList))
-        actor = actorList[randomIndexA]
         #TODO: look into what the float values are for time
-        fileWriter.writerow([actor, '%s' % message, '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
-    
-    for x in range(1):
-        fileWriter.writerow(['DER' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
-        fileWriter.writerow(['DCM' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
-        fileWriter.writerow(['DERAS' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
-        fileWriter.writerow(['DTM' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+        if (args.profile_addon is not None) and (x == args.profile_addon):
+            fileWriter.writerow(['DER' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+            fileWriter.writerow(['DCM' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+            fileWriter.writerow(['DERAS' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+            fileWriter.writerow(['DTM' , 'Ex', '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+        else:
+            fileWriter.writerow(['DER', '%s' % message, '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+            fileWriter.writerow(['DCM', '%s' % message, '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+            fileWriter.writerow(['DERAS' , '%s' % message, '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
+            fileWriter.writerow(['DTM' , '%s' % message, '%f' % (time.time() + args.increment * x), random.randint(15, 45)/100, 'No Attack'])
     return 
 #create and write to csv file
 #TODO: check if the file name aleady exists to avoid overwrite 

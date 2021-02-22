@@ -38,6 +38,7 @@ R_THRESH_DS = 1.6
 R_THRESH_C = 0.8
 R_THRESH_TotMsg = 10
 R_THRESH_CommFrq = 3.3
+R_THRESH_CommFrq_HIGH = 6
 R_THRESH_TxT = 40
 R_THRESH_TSLC = 900
 R_THRESH_RFC = 0.5
@@ -178,7 +179,7 @@ def response(current_row):
         print(DTM_response)
     
     #check for excessive communication rate 
-    if ((currentTrustVector[actor]["communication frequency"] > R_THRESH_CommFrq) and (currentTrustVector[actor]["total message count"] > R_THRESH_TotMsg)):
+    if ((currentTrustVector[actor]["communication frequency"] > R_THRESH_CommFrq_HIGH) and (currentTrustVector[actor]["total message count"] > R_THRESH_TotMsg)):
         DTM_response = "Communication rate is ecessive from" + actor
         currentTrustVector[actor]["DTM response"] = DTM_response
         response_flag = 1
