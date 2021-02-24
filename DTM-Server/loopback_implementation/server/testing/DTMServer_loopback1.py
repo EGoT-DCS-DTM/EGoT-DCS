@@ -18,7 +18,7 @@ def randomStr():
 def appendLog(dcm_random, dcm_timestamp):
     """update the .xml log of dcm updates every 1 minute
     """
-    if posts_received % 12 == 0: #because the http client program running on the dcm
+    if posts_received % 2 == 0: #because the http client program running on the dcm
                                  #submits a POST request every 5 seconds
         tree = ET.parse('TrustLog_loopback.xml') #create xml tree from file contents
         root = tree.getroot() #ID root of tree (TrustLog)
