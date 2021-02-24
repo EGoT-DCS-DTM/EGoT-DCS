@@ -25,7 +25,7 @@ I checked the box marked `Emulate Terminal in Output Console`. This allowed me t
 Pycharm created the .idea file you see in the directory during this process. I'm relatively sure it stores my multirun configuration, which is called `loopback_multirun_1`.
 But I'm not fully sure, because nothing in the directory looks immediately multi-run-ey, so ah well. 
 
-Anyways, good luck! Also sidebar the loopback DTM server updates the `TrustLog_loopback.xml` file ever 10 seconds (every other client contact) so be careful about that! (and don't delete the entire contents of the file or you might mess up the XML parsing. Also, if you add a new .xml log file, make sure to copy/paste the original, minus all but the first DCMContact instance, and then change the name in the appendLog() method in the server script to match your new file). 
+Anyways, good luck! Also sidebar the loopback DTM server updates the `TrustLog_loopback.xml` file ever 10 seconds (every other client contact, you can mess with this in appendLog(), its an if with a % 2 operator to execute every other instance of the global posts_received counter) so be careful about that! (and don't delete the entire contents of the file or you might mess up the XML parsing. Also, if you add a new .xml log file, make sure to copy/paste the original, minus all but the first DCMContact instance, and then change the name in the appendLog() method in the server script to match your new file). 
 
 ### Some Raspi Instructions! 
 
@@ -51,4 +51,9 @@ which the DTM server will be parsing, adding some information, and storing in th
 
 The DTM server will also update a webpage, visible from any browser on the network by pasting
 `[IP address XX.XX.XX.etc]:8889`, where `8889` is the port number in the code (but it can be changed).
+
+Also probably read the stuff at the end of the loopback implementation instructions about the appendLog() .xml file modification, it all holds true 
+except that the Raspi DTM server only updates the log once per minute instead of every 10 seconds and the logfile name is different.
+
+Good luck :) let me know if you have any questions, this was super fun to build!
 
