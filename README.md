@@ -2,9 +2,9 @@
 
 Developed by Whitman Spitzer 
 
-Raspi implementation for the DTM and DCM Raspberry Pi prototypes, written in Python 3, using standard library objects in DTM-Server > raspi_implementation
+Raspi implementation for the DTM and DCM Raspberry Pi prototypes, written in Python 3, using standard library objects. Find in DTM-Server > raspi_implementation
 
-Loopback implementation for non-raspi testing and development, running client and server simultaneously on one machine with `localhost` in DTM-Server > loopback_implementation
+Loopback implementation for non-raspi testing and development, running client and server simultaneously on one machine with `localhost`. Find in DTM-Server > loopback_implementation
 
 
 ### Some Loopback Instructions!
