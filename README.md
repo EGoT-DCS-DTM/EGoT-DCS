@@ -1,25 +1,44 @@
 # DTM http Server and DCM http Client 
 
-Developed by Whitman Spitzer for the DTM and DCM Raspberry Pi prototypes, written in Python 3, using standard library objects
+Developed by Whitman Spitzer 
+
+Raspi implementation for the DTM and DCM Raspberry Pi prototypes, written in Python 3, using standard library objects
+
+Loopback implementation for non-raspi testing and development, running client and server simultaneously on one machine with `localhost`
 
 
-### Some Instructions! 
+### Some Loopback Instructions!
+
+In DTM-Server > loopback_implementation > server/testing there is a python file called `DTMServer_loopback1.py`. This is the loopback version of the DTM http server
+which substitutes random numbers for the GPU temperature data the raspi implementation uses.
+
+DTM-Server > loopback_implementation > client/testing contains `httpClient_loopback1.py`, which is the loopback version of the DCM client.
+
+These programs function and interact exactly like the raspi versions, except that they are two scripts running on one machine, and communicating
+with a web browser on that same machine. When you have them running, go to your browser and copy/paste `localhost:8887` into the URL to bring
+up the html page. 
+
+The way I did this was the Multirun plugin in for the PyCharm IDE. Using the IDE, I installed the plugin, and created a `Run > Edit Configurations > Multirun` configuration
+for the scripts. This required first creating simple Python configurations for each of the scripts separately to then add to the multirun configuration. For each of them 
+I checked the box marked `Emulate Terminal in Output Console`. This allowed me to run the 2 scripts (client and server) simultaneously for debugging. Woo! 
+
+Pycharm created the .idea file you see in the directory during this process. I'm relatively sure it stores my multirun configuration, which is called `loopback_multirun_1`.
+But I'm not fully sure, because nothing in the directory looks immediately multi-run-ey, so ah well. 
+
+Anyways, good luck!
+
+### Some Raspi Instructions! 
 
 First, clone this repo to a wifi enable raspberry pi.
 
 Next, find the IP address of that Raspberry Pi. You can use the command `hostname -I`
 
-In the server/testing folder, theres a python file, called `DTMServer3.py`
+In the DTM-Server > raspi_implementation > server/testing folder, theres a python file, called `DTMServer3.py`
 
 Open it from the raspi and edit `host_name` to be the raspi's IP address
 
 Now you can run it from the command line by typing `python3 DTMServer3.py`, which will start the DTM Server. 
 This should not require you to add any dependencies (unless your python version isn't up to date).
-
-If you want to run the server or client on a non-raspberry pi machine of some kind, 
-delete the line ```import RPi.GPIO as GPIO``` from the top of the file (it's for GPIO pins)
-and then go through and find the ```os.popen()``` calls to check GPU temp and replace them with other variables 
-to keep the code working.
 
 Now do the same thing from your other wifi enabled raspi, except this time
 in the client/testing folder, edit the `httpClient1.py` file,
@@ -33,7 +52,3 @@ which the DTM server will be parsing, adding some information, and storing in th
 The DTM server will also update a webpage, visible from any browser on the network by pasting
 `[IP address XX.XX.XX.etc]:8889`, where `8889` is the port number in the code (but it can be changed).
 
-I mentioned you can delete the ```import RPi.GPIO as GPIO``` line and ditch the `os.popen()` and then run either the 
-server or client on a non-raspi computer, you can also run them both on the same computer! 
-if you put the keyword `localhost` anywhere `host_name` goes, it should create a loopback (maybe, I didn't try it)
-for you to then put ```localhost:8889``` in the browser to view the page. 
