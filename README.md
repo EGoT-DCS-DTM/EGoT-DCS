@@ -2,14 +2,14 @@
 
 Developed by Whitman Spitzer 
 
-Raspi implementation for the DTM and DCM Raspberry Pi prototypes, written in Python 3, using standard library objects
+Raspi implementation for the DTM and DCM Raspberry Pi prototypes, written in Python 3, using standard library objects in DTM-Server > raspi_implementation
 
-Loopback implementation for non-raspi testing and development, running client and server simultaneously on one machine with `localhost`
+Loopback implementation for non-raspi testing and development, running client and server simultaneously on one machine with `localhost` in DTM-Server > loopback_implementation
 
 
 ### Some Loopback Instructions!
 
-In DTM-Server > loopback_implementation > server/testing there is a python file called `DTMServer_loopback1.py`. This is the loopback version of the DTM http server
+In DTM-Server > loopback_implementation > server/testing there is a python file called `DTMServer_loopback1.py`. This is the loopback version of the DTM http server, 
 which substitutes random numbers for the GPU temperature data the raspi implementation uses.
 
 DTM-Server > loopback_implementation > client/testing contains `httpClient_loopback1.py`, which is the loopback version of the DCM client.
