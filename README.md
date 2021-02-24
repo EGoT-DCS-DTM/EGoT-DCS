@@ -25,7 +25,7 @@ I checked the box marked `Emulate Terminal in Output Console`. This allowed me t
 Pycharm created the .idea file you see in the directory during this process. I'm relatively sure it stores my multirun configuration, which is called `loopback_multirun_1`.
 But I'm not fully sure, because nothing in the directory looks immediately multi-run-ey, so ah well. 
 
-Anyways, good luck!
+Anyways, good luck! Also sidebar the loopback DTM server updates the `TrustLog_loopback.xml` file ever 10 seconds (every other client contact) so be careful about that! (and don't delete the entire contents of the file or you might mess up the XML parsing. Also, if you add a new .xml log file, make sure to copy/paste the original, minus all but the first DCMContact instance, and then change the name in the appendLog() method in the server script to match your new file). 
 
 ### Some Raspi Instructions! 
 
