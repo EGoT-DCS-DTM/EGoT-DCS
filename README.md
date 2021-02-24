@@ -14,6 +14,7 @@ In the server/testing folder, theres a python file, called `DTMServer3.py`
 Open it from the raspi and edit `host_name` to be the raspi's IP address
 
 Now you can run it from the command line by typing `python3 DTMServer3.py`, which will start the DTM Server. 
+This should not require you to add any dependencies (unless your python version isn't up to date).
 
 If you want to run the server or client on a non-raspberry pi machine of some kind, 
 delete the line ```import RPi.GPIO as GPIO``` from the top of the file (it's for GPIO pins)
