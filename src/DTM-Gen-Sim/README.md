@@ -46,7 +46,7 @@ Mixed Arguments - Allows for multiple profiles to be incorporated into the mixed
 
 ### Example 
 ````
-python3 TMsimDataGenerator.py -f test.csv -p ideal -n 100 -i 1 -np [optional] -ma [used when the mixed profile is ued]
+python3 TMsimDataGenerator.py -f test.csv -p ideal -n 100 -i 1 -np [optional] -ma [optional]
 ````
 This example generates a file called test.csv, the message evaluation for all the actors will be expected. <br />
 There will be 100 messages per actor (400 messages total) and there is 1-sec step in the time
