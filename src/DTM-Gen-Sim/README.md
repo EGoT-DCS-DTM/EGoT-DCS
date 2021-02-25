@@ -41,9 +41,12 @@ PROFILE ADDONS - Allows for special funcitonality in some profiles <br />
     Random profile - if PROFILE ADDONS is 1, each data point will have a random timestamp <br />
     almost_good - if PROFILE ADDONS is not zero, PROFILE ADDONS value will be where a UX message is added <br />
     almost_bad - if PROFILE ADDONS is not zero, PROFILE ADDONS value will be where a EX message is added <br />
+
+Mixed Arguments - Allows for multiple profiles to be incorporated into the mixed profile <br />
+
 ### Example 
 ````
-python3 TMsimDataGenerator.py -f test.csv -p ideal -n 100 -i 1 -np [optional]
+python3 TMsimDataGenerator.py -f test.csv -p ideal -n 100 -i 1 -np [optional] -ma [used when the mixed profile is ued]
 ````
 This example generates a file called test.csv, the message evaluation for all the actors will be expected. <br />
 There will be 100 messages per actor (400 messages total) and there is 1-sec step in the time
